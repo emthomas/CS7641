@@ -45,7 +45,7 @@ for algo in ["RHC","MIMIC","GA","SA"]:
     with open(OUTFILE_BASE+algo+".csv", 'w') as f:
         f.write("iterations,training_time,fitness\n")
 
-for N in xrange(10, 1000):
+for N in xrange(38000, 500000, 1000):
     T=N/10
     fill = [2] * N
     ranges = array('i', fill)
@@ -61,7 +61,7 @@ for N in xrange(10, 1000):
     pop = GenericProbabilisticOptimizationProblem(ef, odd, df)
 
     rhc = RandomizedHillClimbing(hcp)
-    fit = FixedIterationTrainer(rhc, N)
+    fit = FixedIterationTrainer(rhc, 100)
     start = time.time()
     fit.train()
     end = time.time()
@@ -72,7 +72,7 @@ for N in xrange(10, 1000):
         f.write("%d,%f,%f\n" % (N, training_time, ef.value(rhc.getOptimal())))
 
     sa = SimulatedAnnealing(1E11, .95, hcp)
-    fit = FixedIterationTrainer(sa, N)
+    fit = FixedIterationTrainer(sa, 100)
     start = time.time()
     fit.train()
     end = time.time()
@@ -83,7 +83,7 @@ for N in xrange(10, 1000):
         f.write("%d,%f,%f\n" % (N, training_time, ef.value(sa.getOptimal())))
 
     ga = StandardGeneticAlgorithm(200, 100, 10, gap)
-    fit = FixedIterationTrainer(ga, N)
+    fit = FixedIterationTrainer(ga, 10)
     start = time.time()
     fit.train()
     end = time.time()
@@ -93,13 +93,13 @@ for N in xrange(10, 1000):
     with open(OUTFILE, 'a+') as f:
         f.write("%d,%f,%f\n" % (N, training_time, ef.value(ga.getOptimal())))
 
-    mimic = MIMIC(200, 20, pop)
-    fit = FixedIterationTrainer(mimic, N)
-    start = time.time()
-    fit.train()
-    end = time.time()
-    training_time = end - start
-    print "MIMIC: " + str(ef.value(mimic.getOptimal()))
-    OUTFILE = "%s%s.csv" % (OUTFILE_BASE, "MIMIC")
-    with open(OUTFILE, 'a+') as f:
-        f.write("%d,%f,%f\n" % (N, training_time, ef.value(mimic.getOptimal())))
+    # mimic = MIMIC(200, 20, pop)
+    # fit = FixedIterationTrainer(mimic, 10)
+    # start = time.time()
+    # fit.train()
+    # end = time.time()
+    # training_time = end - start
+    # print "MIMIC: " + str(ef.value(mimic.getOptimal()))
+    # OUTFILE = "%s%s.csv" % (OUTFILE_BASE, "MIMIC")
+    # with open(OUTFILE, 'a+') as f:
+    #     f.write("%d,%f,%f\n" % (N, training_time, ef.value(mimic.getOptimal())))
