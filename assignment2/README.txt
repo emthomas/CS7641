@@ -1,13 +1,15 @@
 ASSIGNMENT 2
 =======
 
+Code is located at https://github.com/emthomas/CS7641/tree/master/assignment2
+
 # Requirements
 * jython
 * java
 * ABAGAIL
 
 # To Run
-Execute the `run.sh` in the jython folder
+Execute the `run.sh` in the jython folder. The contents is located below. 
 
   ```
   #!/bin/bash
